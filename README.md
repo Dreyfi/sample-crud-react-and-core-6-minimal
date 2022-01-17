@@ -1,6 +1,6 @@
 # Fullstack E-care project 
 
-This code is a system project Web with ASP.NET Core MVC and Entity Framework  ;)
+This code is a sample fullstack project CRUD for a Patients management system.
 
 ![](header.jpg)
 
