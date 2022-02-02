@@ -1,7 +1,21 @@
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<PatientDbContext>(options => options.UseInMemoryDatabase("Patients"));
+IConfiguration configuration = new ConfigurationBuilder()
+                            .AddJsonFile("appsettings.json")
+                            .Build();
+
+var connection = configuration["MySqlConnection:MySqlConnectionString"];
+var serverVersion = ServerVersion.AutoDetect(connection);
+
+//builder.Services.AddDbContext<PatientDbContext>(options => options.UseInMemoryDatabase("Patients"));
+builder.Services.AddDbContext<PatientDbContext>(options => 
+    options.UseMySql(connection, serverVersion)
+    .LogTo(Console.WriteLine, LogLevel.Information)
+    .EnableSensitiveDataLogging()
+    .EnableDetailedErrors()
+);
 
 const string eCareOrigin = "e-care-web-origin";
 builder.Services.AddCors(options =>

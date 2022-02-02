@@ -5,5 +5,12 @@ class PatientDbContext : DbContext {
 
     }
 
+     protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Patient>()
+            .ToTable("Patients");
+    }
+
     public DbSet<Patient> Patients {get; set;}
+    
 }
